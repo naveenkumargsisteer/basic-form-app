@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-form',
@@ -13,7 +14,9 @@ export class Form {
 
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  private apiUrl = 'http://localhost:8000/register';
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -23,8 +26,18 @@ export class Form {
 
   onSubmit() {
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      alert('Form Submitted Successfully!');
+
+      this.http.post(this.apiUrl, this.userForm.value)
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            this.userForm.reset();
+          },
+          error: (error) => {
+            console.error(error); 
+          }
+        });
+
     }
   }
 }
