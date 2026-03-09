@@ -1,29 +1,57 @@
 <div class="form-container">
-  <h2>User Registration Form</h2>
+  
+  <!-- registration form -->
+  <div *ngIf="!showLogin">
+    <h2>User Registration Form</h2>
 
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <label>Name:</label>
+      <input type="text" formControlName="name" />
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        Name is required
+      </div>
 
-    <label>Name:</label>
-    <input type="text" formControlName="name" />
-    <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
-      Name is required
-    </div>
+      <label>Email:</label>
+      <input type="email" formControlName="email" />
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+        Enter valid email
+      </div>
 
-    <label>Email:</label>
-    <input type="email" formControlName="email" />
-    <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
-      Enter valid email
-    </div>
+      <label>Password:</label>
+      <input type="password" formControlName="password" />
+      <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+        Minimum 6 characters required
+      </div>
 
-    <label>Password:</label>
-    <input type="password" formControlName="password" />
-    <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
-      Minimum 6 characters required
-    </div>
+      <button type="submit" [disabled]="userForm.invalid">
+        Submit
+         </button>
+     
+    </form>
+  </div>
+   <!-- toggle button between register and login -->
+  <button type="button" class="toggle-btn" (click)="toggleLogin()">
+    {{ showLogin ? 'Go to Register' : 'Already have an account? Login' }}
+  </button>
+  <!-- login form -->
+  <div *ngIf="showLogin">
+    <h2>User Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <label>Email:</label>
+      <input type="email" formControlName="email" />
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        Enter valid email
+      </div>
 
-    <button type="submit" [disabled]="userForm.invalid">
-      Submit
-    </button>
+      <label>Password:</label>
+      <input type="password" formControlName="password" />
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        Password is required
+      </div>
 
-  </form>
+      <button type="submit" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+  </div>
 </div>

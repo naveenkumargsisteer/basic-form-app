@@ -67,3 +67,19 @@ button:disabled {
   background-color: #9e9e9e;
   cursor: not-allowed;
 }
+
+/* toggle button appearance */
+.toggle-btn {
+  margin-bottom: 20px;
+  background-color: transparent;
+  color: #1976d2;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.toggle-btn:hover {
+  color: #125aa0;
+  background-color: transparent;
+  text-decoration: none;
+}
